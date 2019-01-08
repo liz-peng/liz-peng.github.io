@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TheNatureOfCode - Showcase</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- wrapper -->
+		<div id="wrapper">
+			<!-- main -->
+			<div id="main">
+				<div class="inner">
+					<!-- header -->
+					<header id="header">
+						The Nature Of Code &nbsp;<strong> Chp00 - Introduction</strong>
+							<ul class="icons">
+								<li>
+									<a href="#" class="icon fa-github"><span class="label">Github</span></a>
+								</li>
+							</ul>
+					</header>
+
+					<!-- section -->
+					<section id="banner">
+						<div class="content">
+							<header>
+								<h3>Example I.1<br />Traditional Random Walk - 1 &nbsp;
+									<a href="https://editor.p5js.org/liz-peng/sketches/SJRd1DGG4" target="_blank" class="button">p5.js</a>
+								</h3>
+							</header>
+							<p>
+								Random walk: 4 possible steps
+							</p>
+							<!-- code -->
+							<pre><code>let w; //Walker obj
+
+function setup() {
+  createCanvas(640,360);
+  background(250);
+  w = new Walker(); 
+  //create Walker obj by calling the constructor with the new operator
+}
+
+function draw() { //call functions on the Walker
+  w.step();
+  w.render();
+  //during each cycle through draw(), Walker will take a step and draw a dot
+}
+
+class Walker { //defince walker class
+  constructor() { //initialize obj
+    this.x = width/2; 
+    //x location at the center of the canvas (obj's data)
+    this.y = height/2; 
+    //y location at the center of the canvas (obj's data)
+  }
+
+  render() { //obj's 1st function: display itself as a dot
+    stroke(0);
+    point(this.x,this.y);
+  }
+
+  step() { //obj's 2nd function: direct walker obj to take a step
+    <strong>
+    //random() returns a floating point between 0 (inclusive) and 4 (exclusive)
+    //floor() rounds a number downward to its nearest integer
+    //results will be 0, 1, 2, or 3
+
+    var choice = floor(random(4)); 
+    if (choice === 0) {
+      this.x++; //to right
+    } else if (choice == 1) {
+      this.x--; //to left
+    } else if (choice == 2) {
+      this.y++; //go down
+    } else {
+      this.y--; //go up
+    }
+	</strong>
+    this.x = constrain(this.x,0,width-1); //canvas width-1
+    this.y = constrain(this.y,0,height-1); //canvas height-1
+    //constrain(value, min, max)
+    //constrains a value to not exceed a max and min value
+  }
+} //end of Walker class
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; margin-top:45px;"  scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SJRd1DGG4"></iframe>
+						</span>
+					</section>
+				</div>
+			</div>
+			
+			<!-- sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>The Nature Of Code</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Introduction</a></li>
+						</ul>
+					</nav>
+					
+					<!-- Footer -->
+					<footer id="footer">
+						<ul class="contact">
+							<li class="fa-envelope-o">speng2@wpi.edu&nbsp; (Liz Peng)</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
