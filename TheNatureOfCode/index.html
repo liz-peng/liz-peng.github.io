@@ -17,7 +17,7 @@
 						The Nature Of Code &nbsp;<strong> Chp00 - Introduction</strong>
 							<ul class="icons">
 								<li>
-									<a href="#" class="icon fa-github"><span class="label">Github</span></a>
+									<a href="https://github.com/liz-peng/TheNatureOfCode-p5.js.git" target="_blank" class="icon fa-github"></a>
 								</li>
 							</ul>
 					</header>
@@ -26,19 +26,20 @@
 					<section class="banner">
 						<div class="content">
 							<header>
-								<h3>Example I.1<br />Traditional Random Walk - 1 &nbsp;
-									<a href="https://editor.p5js.org/liz-peng/sketches/SJRd1DGG4" target="_blank" class="button">p5.js</a>
+								<h3>Example I.1<br />Traditional Random Walk
 								</h3>
 							</header>
 							<p>
-								Random walk: 4 possible steps
+								4 possible steps &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/SJRd1DGG4" target="_blank" class="button">p5.js</a><br>
+								8 possible steps includes the ninth to stay in the same place &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/BJUVZPfzN" target="_blank" class="button">p5.js</a><br>
+								Arbitrary random value between -1.0 and 1.0 &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/HyNk5e7z4" target="_blank" class="button">p5.js</a>
 							</p>
 							<!-- code -->
-							<pre><code>let w; //Walker obj
+							<pre><code>let w;
 
 function setup() {
-  createCanvas(640,360);
-  background(250);
+  createCanvas(560,390);
+  background(255);
   w = new Walker(); 
   //create Walker obj by calling the constructor with the new operator
 }
@@ -64,11 +65,11 @@ class Walker { //defince walker class
 
   step() { //obj's 2nd function: direct walker obj to take a step
     <strong>
+    //4 possible steps
+    var choice = floor(random(4)); 
     //random() returns a floating point between 0 (inclusive) and 4 (exclusive)
     //floor() rounds a number downward to its nearest integer
     //results will be 0, 1, 2, or 3
-
-    var choice = floor(random(4)); 
     if (choice === 0) {
       this.x++; //to right
     } else if (choice == 1) {
@@ -78,68 +79,21 @@ class Walker { //defince walker class
     } else {
       this.y--; //go up
     }
-	</strong>
-    this.x = constrain(this.x,0,width-1); //canvas width-1
-    this.y = constrain(this.y,0,height-1); //canvas height-1
-    //constrain(value, min, max)
-    //constrains a value to not exceed a max and min value
-  }
-} //end of Walker class
-							</code></pre>
-						</div>
-						<span class="p5 object">
-							<iframe style="width: 100%; height: 100%; overflow: hidden; margin-top:45px;"  scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SJRd1DGG4"></iframe>
-						</span>
-					</section>
-
-					<!-- section -->
-					<section class="banner">
-						<div class="content">
-							<header>
-								<h3>Example I.1<br />Traditional Random Walk - 2 &nbsp;
-									<a href="https://editor.p5js.org/liz-peng/sketches/BJUVZPfzN" target="_blank" class="button">p5.js</a>
-								</h3>
-							</header>
-							<p>
-								Random walk: 8 possible steps includes the ninth to stay in the same place
-							</p>
-							<!-- code -->
-							<pre><code>let w; //Walker obj
-
-function setup() {
-  createCanvas(640,360);
-  background(250);
-  w = new Walker(); 
-  //create Walker obj by calling the constructor with the new operator
-}
-
-function draw() { //call functions on the Walker
-  w.step();
-  w.render();
-  //during each cycle through draw(), Walker will take a step and draw a dot
-}
-
-class Walker { //defince walker class
-  constructor() { //initialize obj
-    this.x = width/2; 
-    //x location at the center of the canvas (obj's data)
-    this.y = height/2; 
-    //y location at the center of the canvas (obj's data)
-  }
-
-  render() { //obj's 1st function: display itself as a dot
-    stroke(0);
-    point(this.x,this.y);
-  }
-
-  step() { //obj's 2nd function: direct walker obj to take a step
-    <strong>
-    //pick from 3 possible steps along the x-axis and y-axis (-1, 0, or 1) 
-    var stepx = floor(random(3))-1;
-    var stepy = floor(random(3))-1;
+    
+    /* 8 possible steps includes the ninth to stay
+    var stepx = floor(random(3))-1; //pick from 3 possible steps along the x-axis (-1, 0, or 1) 
+    var stepy = floor(random(3))-1; //pick from 3 possible steps along the y-axis (-1, 0, or 1) 
     this.x += stepx;
     this.y += stepy;
-	</strong>
+    */
+    
+    /* Arbitrary random value between -1.0 and 1.0
+    var stepx = random(-1, 1); //yields any floating point number between -1.0 and 1.0
+    var stepy = random(-1, 1); //yields any floating point number between -1.0 and 1.0
+    this.x += stepx;
+    this.y += stepy;
+    */
+    </strong>
     this.x = constrain(this.x,0,width-1); //canvas width-1
     this.y = constrain(this.y,0,height-1); //canvas height-1
     //constrain(value, min, max)
@@ -149,7 +103,7 @@ class Walker { //defince walker class
 							</code></pre>
 						</div>
 						<span class="p5 object">
-							<iframe style="width: 100%; height: 100%; overflow: hidden; margin-top:45px;"  scrolling="no" src="https://editor.p5js.org/liz-peng/embed/BJUVZPfzN"></iframe>
+							<iframe style="width: 100%; height: 100%; overflow: hidden; margin-top:92px;"  scrolling="no" src="https://editor.p5js.org/liz-peng/embed/HkA3arfMN"></iframe>
 						</span>
 					</section>
 				</div>
