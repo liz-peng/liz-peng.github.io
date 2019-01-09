@@ -26,7 +26,7 @@
 					<section class="banner">
 						<div class="content">
 							<header>
-								<h3>Example I.1<br />Traditional Random Walk
+								<h3>Example I.1<br>Traditional Random Walk
 								</h3>
 							</header>
 							<p>
@@ -103,7 +103,53 @@ class Walker { //defince walker class
 							</code></pre>
 						</div>
 						<span class="p5 object">
-							<iframe style="width: 100%; height: 100%; overflow: hidden; margin-top:92px;"  scrolling="no" src="https://editor.p5js.org/liz-peng/embed/HkA3arfMN"></iframe>
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:92px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/HkA3arfMN"></iframe>
+						</span>
+					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example I.2<br>Random Number Distribution
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/ryUg1omf4" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let randomCount = []; //array to keep track of how often random numbers are picked
+let total = 20;
+
+function setup() {
+  createCanvas(560,390);
+  for (let i = 0; i < total; i++) {
+    randomCount[i] = 0;
+  }
+}
+
+function draw() {
+  background(255);
+  let randomNum = floor(random(total)); //pick a random number
+  randomCount[randomNum]++; //increase count
+
+  //set rectangle's color
+  stroke(0);
+  strokeWeight(2);
+  fill(255);
+
+  let w = width/randomCount.length; // 560/20 = 28
+	
+  //draw a rectangle at location x,y (x*w,height-randomCount[x]) 
+  //with a width and height of (w-1,randomCount[x])
+  for (let x = 0; x < randomCount.length; x++) {
+    rect(x*w,height-randomCount[x],w-1,randomCount[x]);
+  }
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/ryUg1omf4"></iframe>
 						</span>
 					</section>
 				</div>
