@@ -305,6 +305,60 @@ function draw() {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/BymbA1BzE"></iframe>
 						</span>
 					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example I.5:<br>Perlin Noise Walker
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/ryayC7HME" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let walker;
+
+function setup() {
+  createCanvas(560,390);
+  walker = new Walker();
+  background(220);
+}
+
+function draw() {
+  walker.walk();
+  walker.display();
+}
+
+class Walker{
+  constructor(){
+    //createVector(x,y,z) which provides a two or three dimensional vector
+    this.position = createVector(width/2,height/2);
+    this.noff = createVector(random(1000),random(1000)); //n-offset
+    //this.noff = createVector(0,10000);
+  }
+
+ display() {
+    strokeWeight(1);
+    fill(63,63,147);
+    stroke(0);
+    ellipse(this.position.x, this.position.y, 48, 48);
+  }
+
+  walk() {
+    //x and y location mapped from noise
+    this.position.x = map(noise(this.noff.x),0,1,0,width); //this.noff.x means tx from the book
+    this.position.y = map(noise(this.noff.y),0,1,0,height); //this.noff.y means ty from the book
+    this.noff.add(0.01,0.01,0); //move forward through time
+    //add() method appends a new element with a specified value to the end of a Set object
+  }
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/ryayC7HME"></iframe>
+						</span>
+					</section>
 				</div>
 			</div>
 			
