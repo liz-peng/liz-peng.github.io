@@ -215,6 +215,46 @@ class Walker{
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/BkFGkl4GE"></iframe>
 						</span>
 					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example I.4<br>Gaussian Distribution
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/S1D-B7EME" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>function setup() {
+  createCanvas(560,390);
+  background(220);
+}
+
+function draw() {
+  // randomGaussian(mean, sd)
+	// If no args, returns a mean of 0 and standard deviation of 1
+	// If one arg, that arg is the mean (standard deviation is 1)
+	// If two args, first is mean, second is standard deviation
+  let x = randomGaussian();
+
+  const sd = 60; // standard deviation
+  const mean = width/2; // mean (middle of the screen along the x-axis)
+  x = ( x * sd ) + mean;  
+  // scale gaussian random number by multiply standard deviation and add mean
+
+  fill(63,63,147,10); // rgba
+  noStroke(); // disables drawing the stroke (outline)
+  ellipse(x, height/2, 16, 16);   
+  // ellipse(x, y, w, h)
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/S1D-B7EME"></iframe>
+						</span>
+					</section>
 				</div>
 			</div>
 			
