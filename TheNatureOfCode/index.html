@@ -255,6 +255,56 @@ function draw() {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/S1D-B7EME"></iframe>
 						</span>
 					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>One Dimensional Noise
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/BymbA1BzE" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let momentInTime = 0;
+let xincrement = 0.01; //change this value to see the different result
+
+function setup() {
+  createCanvas(560,390);
+  background(220);
+  noStroke(); //disables drawing the stroke (outline)
+}
+
+function draw() {
+	//draw rectangle
+  fill(220, 10);
+  rect(0,0,width,height);
+
+  // get a noise value based on a specific moment in time
+  // scale it to the window's width
+  let n = noise(momentInTime);
+  
+	// re-maps a number from one range to another
+  // using map() to customize the range of Perlin noise
+  // map(value, curremtMin, currentMax, newMin, newMax)
+  let x = map(n,0,1,0,width);
+
+  // increment momentInTime in each cycle (move forward in time)
+  momentInTime += xincrement;
+
+  // draw ellipse at the value produced by perlin noise
+  fill(63,63,147);
+  ellipse(x,height/2, 64, 64);
+
+  //print(n); //print() equal to console.log()
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top:38px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/BymbA1BzE"></iframe>
+						</span>
+					</section>
 				</div>
 			</div>
 			
