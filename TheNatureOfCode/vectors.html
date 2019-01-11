@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TheNatureOfCode - Showcase</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- wrapper -->
+		<div id="wrapper">
+			<!-- main -->
+			<div id="main">
+				<div class="inner">
+					<!-- header -->
+					<header id="header">
+						The Nature Of Code &nbsp;<strong> Chp01 - Vectors</strong>
+							<ul class="icons">
+								<li>
+									<a href="https://github.com/liz-peng/TheNatureOfCode-p5.js.git" target="_blank" class="icon fa-github"></a>
+								</li>
+							</ul>
+					</header>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 1.1<br>Bouncing Ball With No Vectors
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/SyBU0rIG4" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let x = 100; // x location
+let y = 100; // y location
+let xspeed = 1; // x speed (change the speed to see difference)
+let yspeed = 3.3; // y speed (change the speed to see difference)
+
+function setup() { 
+  // setup() execute once when the skecth starts
+  createCanvas(560,390);
+}
+
+function draw() {
+  // draw() loops forever until you quit
+  background(220);
+
+  // add speed to the position.
+  x = x + xspeed;
+  y = y + yspeed;
+  
+	// check for bouncing
+  if ((x > width) || (x < 0)) {
+    xspeed = xspeed * -1;
+  }
+  if ((y > height) || (y < 0)) {
+    yspeed = yspeed * -1;
+  }
+
+  stroke(0);
+  strokeWeight(2);
+  fill(63,63,147);
+  ellipse(x, y, 48, 48); // display circle at location(x,y)
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SyBU0rIG4"></iframe>
+						</span>
+					</section>
+				</div>
+			</div>
+			
+			<!-- sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>The Nature Of Code</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Introduction</a></li>
+							<li><a href="vectors.html">Vectors</a></li>
+						</ul>
+					</nav>
+					
+					<!-- Footer -->
+					<footer id="footer">
+						<ul class="contact">
+							<li class="fa-envelope-o">speng2@wpi.edu&nbsp; (Liz Peng)</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
