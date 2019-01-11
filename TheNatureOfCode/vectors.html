@@ -51,7 +51,7 @@ function draw() {
   x = x + xspeed;
   y = y + yspeed;
   
-	// check for bouncing
+	// testing if the circle has reached the edge of the window
   if ((x > width) || (x < 0)) {
     xspeed = xspeed * -1;
   }
@@ -68,6 +68,60 @@ function draw() {
 						</div>
 						<span class="p5 object">
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SyBU0rIG4"></iframe>
+						</span>
+					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 1.2<br>Bouncing Ball With p5.Vectors
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/Ska3qDUMN" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>// declare two Vector variables
+// https://p5js.org/reference/#/p5.Vector
+let position;
+let velocity;
+
+function setup() {
+  createCanvas(560,390);
+  background(220);
+  // createVector(x,y,z)
+  // https://p5js.org/reference/#/p5/createVector
+  position = createVector(100, 100);
+  velocity = createVector(2.5, 5);
+}
+
+function draw() {
+  background(220);
+
+  // add current speed to the position
+  // https://p5js.org/reference/#/p5.Vector/add
+  // add(x,y,z)
+  position.add(velocity);
+	
+  // testing if the circle has reached the edge of the window
+  if ((position.x > width) || (position.x < 0)) {
+    velocity.x = velocity.x * -1;
+  }
+  if ((position.y > height) || (position.y < 0)) {
+    velocity.y = velocity.y * -1;
+  }
+
+  // display circle at x position
+  stroke(0);
+  strokeWeight(2);
+  fill(63,63,147);
+  ellipse(position.x, position.y, 48, 48);
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/Ska3qDUMN"></iframe>
 						</span>
 					</section>
 				</div>
