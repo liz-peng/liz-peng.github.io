@@ -127,6 +127,45 @@ class Ball {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SyUVvRqGE"></iframe>
 						</span>
 					</section>
+
+					<!-- section -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 1.3<br>Vector Subtraction
+								</h3>
+							</header>
+							<p>
+								Move mouse to interact &nbsp;<a href="https://editor.p5js.org/liz-peng/sketches/Sy4htCcfE" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>function setup() {
+  createCanvas(560,390);
+}
+
+function draw() {
+  background(220);
+	
+  // create two vectors, one for mouse location, one for the center of window
+  let mouse = createVector(mouseX,mouseY);
+  let center = createVector(width/2,height/2);
+  mouse.sub(center); // subtract vectors
+	
+  // translate(), specifies an amount to displace objects within the display window
+  // the x parameter specifies left/right translation
+  // the y parameter specifies up/down translation
+  // https://p5js.org/reference/#/p5/translate
+  translate(width/2,height/2);
+  strokeWeight(2);
+  stroke(63,63,147);
+  line(0,0,mouse.x,mouse.y); // draw a line to screen, line(x1, y1, x2, y2)
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/Sy4htCcfE"></iframe>
+						</span>
+					</section>
 				</div>
 			</div>
 			
