@@ -22,7 +22,7 @@
 							</ul>
 					</header>
 
-					<!-- section -->
+					<!-- section 1.1 -->
 					<section class="banner">
 						<div class="content">
 							<header>
@@ -71,7 +71,7 @@ function draw() {
 						</span>
 					</section>
 
-					<!-- section -->
+					<!-- section 1.2 -->
 					<section class="banner">
 						<div class="content">
 							<header>
@@ -128,7 +128,7 @@ class Ball {
 						</span>
 					</section>
 
-					<!-- section -->
+					<!-- section 1.3 -->
 					<section class="banner">
 						<div class="content">
 							<header>
@@ -167,7 +167,7 @@ function draw() {
 						</span>
 					</section>
 
-					<!-- section -->
+					<!-- section 1.4 -->
 					<section class="banner">
 						<div class="content">
 							<header>
@@ -202,6 +202,48 @@ function draw() {
 						</div>
 						<span class="p5 object">
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/r158uJiG4"></iframe>
+						</span>
+					</section>
+
+					<!-- section 1.5 -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 1.5<br>Vector Magnitude
+								</h3>
+							</header>
+							<p>
+								Move mouse to interact with (magnitude is the width of rectangle) &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/rJBnMkpG4" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>function setup() {
+  createCanvas(560,390);
+}
+
+function draw() {
+  background(220);
+	
+  // create two vectors, one for mouse location, one for the center of window
+  let mouse = createVector(mouseX,mouseY);
+  let center = createVector(width/2,height/2);
+  mouse.sub(center); // subtract vectors
+  
+  // mag() is to calculate the magnitude of a vector
+  // the magnitude of a vector can be accessed via the mag() function
+  let magnitude = mouse.mag();
+  fill(63,63,147);
+  stroke(0);
+  rect(0,0,magnitude,10); //we use magnitude as width of a rectangle drawn at the top window
+	
+  translate(width/2,height/2);
+  strokeWeight(2);
+  stroke(63,63,147);
+  line(0,0,mouse.x,mouse.y);
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/rJBnMkpG4"></iframe>
 						</span>
 					</section>
 				</div>
