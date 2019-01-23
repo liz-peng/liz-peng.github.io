@@ -355,6 +355,78 @@ class Mover {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/OP0BIwWv3"></iframe>
 						</span>
 					</section>
+
+					<!-- section 1.8 -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 1.8<br>Motion 101 (Velocity And Constant Acceleration)
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/U9TZ_Xt_4" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let mover; // declare Mover object
+
+function setup() {
+  createCanvas(560,390);
+  mover = new Mover(); // create Mover object
+}
+
+function draw() {
+  background(220);
+	// call functions to Mover object
+  mover.update();
+  mover.checkEdges();
+  mover.display();
+}
+
+class Mover {
+  constructor(){
+    this.location = createVector(width/2,height/2);
+    this.velocity = createVector();
+    this.acceleration = createVector(-0.001, 0.01);
+    this.topspeed = 10; // limit the magnitude of velocity
+  }
+
+  update() {
+    // velocity changes by acceleration and is limited by topspeed
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.location.add(this.velocity);
+  }
+
+  display() {
+    stroke(0);
+    strokeWeight(2);
+    fill(63,63,147);
+    ellipse(this.location.x, this.location.y, 48, 48);
+  }
+
+  checkEdges() {
+		// when object reach the edge of window, set location to the other
+    if (this.location.x > width) {
+      this.location.x = 0;
+    }
+    else if (this.location.x < 0) {
+      this.location.x = width;
+    }
+
+    if (this.location.y > height) {
+      this.location.y = 0;
+    }
+    else if (this.location.y < 0) {
+      this.location.y = height;
+    }
+  }
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/U9TZ_Xt_4"></iframe>
+						</span>
+					</section>
 				</div>
 			</div>
 			
