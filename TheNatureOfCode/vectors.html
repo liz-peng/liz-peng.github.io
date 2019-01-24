@@ -463,11 +463,7 @@ class Mover {
   }
 
   update() {
-    // book use acceleration = PVector.random2D(); but there's no random2D() in p5.js
-    // use math instead for now
-    // reference: https://github.com/shiffman/The-Nature-of-Code-Examples-p5.js/blob/master/chp01_vectors/NOC_1_09_motion101_acceleration/mover.js
-    var angle = random(TWO_PI);
-    this.acceleration = createVector(cos(angle),sin(angle));
+    this.acceleration = p5.Vector.random2D();
     // scaling acceleration to a constant value: 
     //this.acceleration.mult(0.5)
     // scaling acceleration to a random value:
