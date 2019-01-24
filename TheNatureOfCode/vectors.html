@@ -463,9 +463,10 @@ class Mover {
   }
 
   update() {
+    // random2D() gives a Vector of length 1 pointing in a random direction
     this.acceleration = p5.Vector.random2D();
     // scaling acceleration to a constant value: 
-    //this.acceleration.mult(0.5)
+    // this.acceleration.mult(0.5)
     // scaling acceleration to a random value:
     this.acceleration.mult(random(2));
     this.velocity.add(this.acceleration);
