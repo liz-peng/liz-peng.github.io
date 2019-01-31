@@ -539,7 +539,7 @@ class Mover {
   }
 
   update() {
-    var mouse = createVector(mouseX,mouseY);
+    let mouse = createVector(mouseX,mouseY);
     // compute direction (points from location to mouse)
     this.acceleration = p5.Vector.sub(mouse,this.location);
     // set magnitude of acceleration
@@ -578,7 +578,7 @@ class Mover {
 
 function setup() {
   createCanvas(560,390);
-  for (var i = 0; i < 20; i++) {
+  for (let i = 0; i < 20; i++) {
      movers[i] = new Mover(); //initialize each objects in array
   }
 }
@@ -601,7 +601,7 @@ class Mover {
   }
 
   update() {
-    var mouse = createVector(mouseX,mouseY);
+    let mouse = createVector(mouseX,mouseY);
     // compute direction (points from location to mouse)
     this.acceleration = p5.Vector.sub(mouse,this.location);
     // set magnitude of acceleration
