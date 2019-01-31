@@ -66,7 +66,7 @@ class Walker { //defince walker class
   step() { //obj's 2nd function: direct walker obj to take a step
     <strong>
     //4 possible steps
-    var choice = floor(random(4)); 
+    let choice = floor(random(4)); 
     //random() returns a floating point between 0 (inclusive) and 4 (exclusive)
     //floor() rounds a number downward to its nearest integer
     //results will be 0, 1, 2, or 3
@@ -81,15 +81,15 @@ class Walker { //defince walker class
     }
     
     /* 8 possible steps includes the ninth to stay
-    var stepx = floor(random(3))-1; //pick from 3 possible steps along the x-axis (-1, 0, or 1) 
-    var stepy = floor(random(3))-1; //pick from 3 possible steps along the y-axis (-1, 0, or 1) 
+    let stepx = floor(random(3))-1; //pick from 3 possible steps along the x-axis (-1, 0, or 1) 
+    let stepy = floor(random(3))-1; //pick from 3 possible steps along the y-axis (-1, 0, or 1) 
     this.x += stepx;
     this.y += stepy;
     */
     
     /* Arbitrary random value between -1.0 and 1.0
-    var stepx = random(-1, 1); //yields any floating point number between -1.0 and 1.0
-    var stepy = random(-1, 1); //yields any floating point number between -1.0 and 1.0
+    let stepx = random(-1, 1); //yields any floating point number between -1.0 and 1.0
+    let stepy = random(-1, 1); //yields any floating point number between -1.0 and 1.0
     this.x += stepx;
     this.y += stepy;
     */
