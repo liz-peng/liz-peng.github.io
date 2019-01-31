@@ -62,7 +62,7 @@ class Mover {
   // Newton's second law: force=accelaration*mass
   applyForce(force) {
     // force/mass=acceleration
-    var f = p5.Vector.div(force, this.mass); // receive force, divide by mass
+    let f = p5.Vector.div(force, this.mass); // receive force, divide by mass
     this.acceleration.add(f); // add force to acceleration
   }
 
