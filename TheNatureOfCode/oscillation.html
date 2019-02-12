@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TheNatureOfCode - Showcase</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- wrapper -->
+		<div id="wrapper">
+			<!-- main -->
+			<div id="main">
+				<div class="inner">
+					<!-- header -->
+					<header id="header">
+						The Nature Of Code &nbsp;<strong> Chp03 - Oscillation</strong>
+							<ul class="icons">
+								<li>
+									<a href="https://github.com/liz-peng/TheNatureOfCode-p5.js.git" target="_blank" class="icon fa-github"></a>
+								</li>
+							</ul>
+					</header>
+
+					<!-- section 1.1 -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 3.1<br>Angular motion using rotate()
+								</h3>
+							</header>
+							<p>
+								The baton starts onscreen with no rotation and then spins faster and faster as the angle of rotation accelerates &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/Vaf6STaK0" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let angle = 0; //location
+let aVelocity = 0; //velocity
+let aAcceleration = 0.0001; //accelaration
+
+function setup() {
+  createCanvas(560,390);
+}
+
+function draw() {
+  background(220);
+    fill(63,63,147);
+  stroke(0);
+  strokeWeight(2);
+  
+  translate(width/2, height/2);
+  rotate(angle);
+    line(-60, 0, 60, 0);
+  ellipse(60, 0, 16, 16);
+  ellipse(-60, 0, 16, 16);
+
+  angle += aVelocity; //angular = velocity.add(acceration)
+  aVelocity += aAcceleration; //angular = location.add(velocity)
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 60px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/Vaf6STaK0"></iframe>
+						</span>
+					</section>
+				</div>
+			</div>
+			
+			<!-- sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>The Nature Of Code</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Introduction</a></li>
+							<li><a href="vectors.html">Vectors</a></li>
+							<li><a href="forces.html">Forces</a></li>
+                            <li><a href="oscillation.html">Oscillation</a></li>
+						</ul>
+					</nav>
+					
+					<!-- Footer -->
+					<footer id="footer">
+						<ul class="contact">
+							<li class="fa-envelope-o">speng2@wpi.edu&nbsp; (Liz Peng)</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
