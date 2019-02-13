@@ -638,6 +638,215 @@ class Pendulum {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/7Se2IuYhh"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 3.11 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 3.11<br>A Spring Connection
+                                </h3>
+                            </header>
+                            <p>
+                                Drag the ball and interact with it &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/cAtCG7YYJ" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//mover object
+let bob;
+//spring object
+let spring;
+
+function setup() {
+  createCanvas(560,390);
+  setFrameRate(60);
+  //create objects at starting position
+  //note third argument in Spring constructor is "rest length"
+  spring = new Spring(width / 2, 10, 100);
+  bob = new Bob(width / 2, 100);
+}
+
+function draw() {
+  background(220);
+    
+  //apply a gravity force to the bob
+  let gravity = createVector(0, 2);
+  bob.applyForce(gravity);
+  
+  //connect the bob to the spring (this calculates the force)
+  spring.connect(bob);
+  //constrain spring distance between min and max
+  spring.constrainLength(bob, 30, 200);
+    
+  //update bob
+  bob.update();
+
+  //draw everything
+  spring.displayLine(bob); //draw a line between spring and bob
+  bob.display();
+  spring.display();
+}
+
+function mousePressed() {
+  bob.handleClick(mouseX, mouseY);
+}
+
+function mouseDragged() {
+  bob.handleDrag(mouseX, mouseY);
+}
+
+function mouseReleased() {
+  bob.stopDragging();
+}
+
+class Bob {
+  constructor(x, y) {
+    this.location = createVector(x, y);
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.mass = 24;
+    //arbitrary damping to simulate friction / drag
+    this.damping = 0.98;
+    //for user interaction
+    this.dragOffset = createVector();
+    this.dragging = false;
+  }
+
+  //standard Euler integration
+  update() {
+    this.velocity.add(this.acceleration);
+    this.velocity.mult(this.damping);
+    this.location.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  //newton's law: F = M * A
+  applyForce(force) {
+    let f = force.copy();
+    f.div(this.mass);
+    this.acceleration.add(f);
+  }
+
+  //draw the bob
+  display() {
+    stroke(50);
+    strokeWeight(2);
+    fill(63,63,147);
+    if (this.dragging) {
+      fill(63,63,147,200);
+    }
+    ellipse(this.location.x, this.location.y, this.mass * 2, this.mass * 2);
+  }
+
+  handleClick(mx, my) {
+    let d = dist(mx, my, this.location.x, this.location.y);
+    if (d < this.mass) {
+      this.dragging = true;
+      this.dragOffset.x = this.location.x - mx;
+      this.dragOffset.y = this.location.y - my;
+    }
+  }
+
+  stopDragging() {
+    this.dragging = false;
+  }
+
+  handleDrag(mx, my) {
+    if (this.dragging) {
+      this.location.x = mx + this.dragOffset.x;
+      this.location.y = my + this.dragOffset.y;
+    }
+  }
+}
+
+//object to describe an anchor point that can connect to "Bob" objects via a spring
+//http://www.myphysicslab.com/spring2d.html
+class Spring {
+  constructor(x, y, l) {
+    this.anchor = createVector(x, y);
+    this.restLength = l;
+    this.k = 0.2;
+  }
+  //calculate and apply spring force
+  connect(b) {
+    //vector pointing from anchor to bob location
+    let force = p5.Vector.sub(b.location, this.anchor);
+    //what is distance
+    let d = force.mag();
+    //stretch is difference between current distance and rest length
+    let stretch = d - this.restLength;
+
+    //calculate force according to Hooke's Law
+    //F = k * stretch
+    force.normalize();
+    force.mult(-1 * this.k * stretch);
+    //the function connect() takes care of calling applyForce() 
+    //therefore doesn't have to return a vector to the calling area
+    b.applyForce(force);
+  }
+
+  //constrain the distance between bob and anchor between min and max
+  constrainLength(b, minLength, maxLength) {
+    //a vector pointing from anchor to bob gives us the current length of the spring
+    let dir = p5.Vector.sub(b.location, this.anchor);
+    let d = dir.mag();
+    //too short?
+    if (d < minLength) {
+      dir.normalize();
+      dir.mult(minLength);
+      //reset location and stop from moving (not realistic physics)
+      b.location = p5.Vector.add(this.anchor, dir);
+      b.velocity.mult(0);
+      //too long?
+    } else if (d > maxLength) {
+      dir.normalize();
+      dir.mult(maxLength);
+      //reset location and stop from moving (not realistic physics)
+      b.location = p5.Vector.add(this.anchor, dir);
+      b.velocity.mult(0);
+    }
+  }
+
+  //constrain the distance between bob and anchor between min and max
+  constrainLength(bob, minlen, maxlen) {
+    //a vector pointing from anchor to bob gives us the current length of the spring
+    let dir = p5.Vector.sub(bob.location, this.anchor);
+    let d = dir.mag();
+    //too short?
+    if (d < minlen) {
+      dir.normalize();
+      dir.mult(minlen);
+      //reset position and stop from moving (not realistic physics)
+      bob.location = p5.Vector.add(anchor, dir);
+      bob.velocity.mult(0);
+      //too long?
+    } else if (d > maxlen) {
+      dir.normalize();
+      dir.mult(maxlen);
+      //reset position and stop from moving (not realistic physics)
+      bob.location = p5.Vector.add(this.anchor, dir);
+      bob.velocity.mult(0);
+    }
+  }
+
+  display() {
+    stroke(50);
+    fill(63,63,147);
+    strokeWeight(2);
+    rectMode(CENTER);
+    rect(this.anchor.x, this.anchor.y, 10, 10);
+  }
+
+  displayLine(b) {
+    strokeWeight(2);
+    stroke(50);
+    line(b.location.x, b.location.y, this.anchor.x, this.anchor.y);
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/cAtCG7YYJ"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
