@@ -507,6 +507,48 @@ function setup() {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/vD6xgR_mz"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 3.9 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 3.9<br>The Wave
+                                </h3>
+                            </header>
+                            <p>
+                                <a href="https://editor.p5js.org/liz-peng/sketches/cKKQ7bSTg" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//we need to have a variable to track what value of angle the wave should start with
+let startAngle = 0;
+let angleVel = 0.23;
+
+function setup() {
+  createCanvas(560,390);
+}
+
+function draw() {
+  background(220);
+    
+  //in order to move the wave, we start at a different theta value each frame
+  startAngle += 0.015;
+  let angle = startAngle;
+
+  for (let x = 0; x <= width; x += 15) {
+    let y = map(sin(angle), -1, 1, 0, height);
+    stroke(50);
+    fill(63,63,147,150);
+    strokeWeight(2);
+    ellipse(x, y, 48, 48);
+    angle += angleVel;
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/cKKQ7bSTg"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
