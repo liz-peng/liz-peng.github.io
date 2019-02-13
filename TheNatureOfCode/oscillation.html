@@ -760,8 +760,11 @@ class Bob {
 //object to describe an anchor point that can connect to "Bob" objects via a spring
 //http://www.myphysicslab.com/spring2d.html
 class Spring {
+  //constructor initializes the anchor point and rest length
   constructor(x, y, l) {
+    //keep track of spring's anchor location
     this.anchor = createVector(x, y);
+    //rest length and spring constant variables
     this.restLength = l;
     this.k = 0.2;
   }
@@ -771,7 +774,7 @@ class Spring {
     let force = p5.Vector.sub(b.location, this.anchor);
     //what is distance
     let d = force.mag();
-    //stretch is difference between current distance and rest length
+    //stretch = difference between current distance and rest length
     let stretch = d - this.restLength;
 
     //calculate force according to Hooke's Law
@@ -826,15 +829,15 @@ class Spring {
       bob.velocity.mult(0);
     }
   }
-
-  display() {
+    //draw anchor
+  display() { 
     stroke(50);
     fill(63,63,147);
     strokeWeight(2);
     rectMode(CENTER);
     rect(this.anchor.x, this.anchor.y, 10, 10);
   }
-
+    //draw spring connection between bob location and anchor 
   displayLine(b) {
     strokeWeight(2);
     stroke(50);
