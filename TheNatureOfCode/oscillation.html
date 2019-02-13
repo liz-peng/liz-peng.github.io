@@ -180,6 +180,92 @@ class Mover {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/JM-9q5PwO"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 3.3 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 3.3<br>Pointing in the direction of motion
+                                </h3>
+                            </header>
+                            <p>
+                                Move mouse to interact with &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/sn0BaO4-x" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>let mover;
+
+function setup() {
+  createCanvas(560,390);
+  mover = new Mover();
+}
+
+function draw() {
+  background(220);
+    mover.update();
+  mover.checkEdges();
+  mover.display();
+}
+class Mover {
+  constructor() {
+    this.position = createVector(width / 2, height / 2);
+    this.velocity = createVector(0, 0);
+    this.acceleration = 0;
+    this.topspeed = 4;
+    this.xoff = 1000;
+    this.yoff = 0;
+    this.r = 16;
+  }
+
+  update() {
+    let mouse = createVector(mouseX, mouseY);
+    let dir = p5.Vector.sub(mouse, this.position);
+    dir.normalize();
+    dir.mult(0.5);
+    this.acceleration = dir;
+
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.position.add(this.velocity);
+  }
+
+  display() {
+    //heading() function: calculates the angle of rotation for a vector (2D vectors only)
+    let angle = this.velocity.heading();
+
+    stroke(0);
+    strokeWeight(2);
+    fill(63,63,147);
+    push();
+    //https://p5js.org/reference/#/p5/rectMode
+    rectMode(CENTER);
+
+    translate(this.position.x, this.position.y);
+    rotate(angle); //rotate according to angle
+    rect(0, 0, 30, 10);
+
+    pop();
+  }
+
+  checkEdges() {
+    if (this.position.x > width) {
+      this.position.x = 0;
+    } else if (this.position.x < 0) {
+      this.position.x = width;
+    }
+
+    if (this.position.y > height) {
+      this.position.y = 0;
+    } else if (this.position.y < 0) {
+      this.position.y = height;
+    }
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/sn0BaO4-x"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
