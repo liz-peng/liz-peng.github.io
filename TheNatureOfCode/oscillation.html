@@ -266,6 +266,60 @@ class Mover {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/sn0BaO4-x"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 3.4 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 3.4<br>Polar to Cartesian
+                                </h3>
+                            </header>
+                            <p>
+                                Convert a Polar coordinate (r,theta) to Cartesian coordinate (x,y) &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/FWKaWx2ir" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>// convert a polar coordinate (r,theta) to cartesian (x,y):
+// x = r * cos(theta)
+// y = r * sin(theta)
+
+let r;
+let theta;
+
+function setup() {
+  createCanvas(560,390);
+  //initialize all values
+  r = height * 0.30;
+  theta = 0;
+}
+
+function draw() {
+  background(220);
+    // translate the origin point to the center of the screen
+  translate(width / 2, height / 2);
+
+  // converting from polar (r,theta) to cartesian (x,y)
+  // converting for use in ellipse() function
+  let x = r * cos(theta);
+  let y = r * sin(theta);
+  
+  // draw the ellipse at the cartesian coordinate
+  // https://p5js.org/reference/#/p5/ellipseMode
+  ellipseMode(CENTER);
+  fill(63,63,147);
+  stroke(50);
+  strokeWeight(2);
+  line(0, 0, x, y);
+  ellipse(x, y, 48, 48);
+
+  // increase the angle over time
+  theta += 0.02;
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/FWKaWx2ir"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
