@@ -176,6 +176,98 @@ class Particle {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/v8J38KQWR"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 4.3 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 4.3<br>Simple Single Particle System
+                                </h3>
+                            </header>
+                            <p>
+                                <a href="https://editor.p5js.org/liz-peng/sketches/-t3xtab2p" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>let ps;
+
+function setup() {
+  createCanvas(560,390);
+  ps = new ParticleSystem(createVector(width / 2, 50));
+}
+
+function draw() {
+  background(220);
+  ps.addParticle();
+  ps.run();
+}
+
+class ParticleSystem {
+  constructor(position) {
+    //origin point where each Particle begins
+    this.origin = position.copy();
+    this.particles = [];
+  }
+    
+  //origin is passed to each Particle when it is added
+  addParticle() {
+    this.particles.push(new Particle(this.origin));
+  }
+
+  run() {
+    // Run every particle
+    for (let particle of this.particles) {
+      particle.run();
+    }
+
+    // Filter removes any elements of the array that do not pass the test
+    this.particles = this.particles.filter(particle => !particle.isDead());
+  }
+}
+
+class Particle {
+  constructor(position) {
+    this.acceleration = createVector(0, 0.05);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.position = position.copy();
+    this.lifespan = 255.0;
+  }
+
+  run() {
+    this.update();
+    this.display();
+  }
+
+  // Method to update position
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+  }
+
+  // Method to display
+  display() {
+    //lifespan range from 255 to 0, we use it as alpha for stroke and fill
+    stroke(50, this.lifespan);
+    strokeWeight(2);
+    fill(63,63,147,this.lifespan);
+    ellipse(this.position.x, this.position.y, 12, 12);
+  }
+
+  // Is the particle still useful?
+  isDead() {
+    if (this.lifespan < 0.0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/-t3xtab2p"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
