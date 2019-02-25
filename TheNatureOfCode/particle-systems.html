@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TheNatureOfCode - Showcase</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- wrapper -->
+		<div id="wrapper">
+			<!-- main -->
+			<div id="main">
+				<div class="inner">
+					<!-- header -->
+					<header id="header">
+						The Nature Of Code &nbsp;<strong> Chp04 - Particle Systems</strong>
+							<ul class="icons">
+								<li>
+									<a href="https://github.com/liz-peng/TheNatureOfCode-p5.js.git" target="_blank" class="icon fa-github"></a>
+								</li>
+							</ul>
+					</header>
+
+					<!-- section 4.1 -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 4.1<br>A single Particle
+								</h3>
+							</header>
+							<p>
+								<a href="https://editor.p5js.org/liz-peng/sketches/p9d0GSbQR" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let p;
+
+function setup() {
+  createCanvas(560,390);
+  p = new Particle(createVector(width / 2, 20));
+}
+
+function draw() {
+  background(220);
+
+  p.run(); //operating single particle
+  if (p.isDead()) {
+    p = new Particle(createVector(width / 2, 20));
+  }
+}
+
+class Particle {
+  constructor(location) {
+    //a particle object has location, velocity and acceleration
+    //for demonstration purpose, assign particle an initial velocity and constant acceleration
+    this.acceleration = createVector(0, 0.05);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.location = location.copy();
+    //lifespan is for keep track of how long the particle has been alive
+    //lifespan start at 255 and count down for convenience
+    this.lifespan = 255.0;
+  }
+  
+    //us run function to call all the other functions that we need
+  run() {
+    this.update();
+    this.display();
+  }
+
+  // Method to update location
+  update() {
+    this.velocity.add(this.acceleration);
+    this.location.add(this.velocity);
+    //lifespan decrease
+    this.lifespan -= 2;
+  }
+
+  display() {
+    //lifespan range from 255 to 0, we use it as alpha for stroke and fill
+    stroke(50, this.lifespan);
+    strokeWeight(2);
+    fill(63,63,147, this.lifespan);
+    ellipse(this.location.x, this.location.y, 12, 12);
+  }
+
+  // Is the particle still useful?
+  isDead() {
+    if (this.lifespan < 0.0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/p9d0GSbQR"></iframe>
+						</span>
+					</section>
+				</div>
+			</div>
+			
+			<!-- sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>The Nature Of Code</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Introduction</a></li>
+							<li><a href="vectors.html">Vectors</a></li>
+                            <li><a href="forces.html">Forces</a></li>
+                            <li><a href="oscillation.html">Oscillation</a></li>
+                            <li><a href="particle-systems.html">Particle Systems</a></li>
+						</ul>
+					</nav>
+					
+					<!-- Footer -->
+					<footer id="footer">
+						<ul class="contact">
+							<li class="fa-envelope-o">speng2@wpi.edu&nbsp; (Liz Peng)</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
