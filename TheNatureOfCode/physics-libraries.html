@@ -22,7 +22,7 @@
 							</ul>
 					</header>
 
-					<!-- section 4.1 -->
+					<!-- section 5.1 -->
 					<section class="banner">
 						<div class="content">
 							<header>
@@ -77,6 +77,103 @@ class Box {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SKEEkA1Yu"></iframe>
 						</span>
 					</section>
+
+                    <!-- section 5.2 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 5.2<br>Box2D Exercise Solved
+                                </h3>
+                            </header>
+                            <p>
+                                Click and drag to add box &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/AzZglMfOG" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//reference to box2d world
+let world;
+
+//list to store all the box objects
+let boxes = [];
+
+function setup() {
+  createCanvas(560, 390);
+    let text = createP("Click and drag to add box");
+  text.position(10, 5);
+  
+  //initialize box2d physics and create the world
+  world = createWorld(new box2d.b2Vec2(0, 0));
+
+}
+
+function draw() {
+  background(220);
+
+  //we must always step through time
+  let timeStep = 1.0 / 30;
+  //second and third arguments are velocity and position iterations
+  world.Step(timeStep, 10, 10);
+
+  //when the mouse is pressed, add a new box object
+  if (mouseIsPressed) {
+    let b = new Box(mouseX, mouseY);
+    boxes.push(b);
+  }
+  //display all the box objects
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].display();
+  }
+}
+class Box {
+  constructor(x, y) {
+    this.w = 16;
+    this.h = 16;
+
+    //define a body
+    let bd = new box2d.b2BodyDef();
+    bd.type = box2d.b2BodyType.b2_dynamicBody;
+    bd.position = scaleToWorld(x, y);
+
+    //define a fixture
+    let fd = new box2d.b2FixtureDef();
+    //fixture holds shape
+    fd.shape = new box2d.b2PolygonShape();
+    fd.shape.SetAsBox(scaleToWorld(this.w / 2), scaleToWorld(this.h / 2));
+
+    // Some physics
+    fd.density = 1.0;
+    fd.friction = 0.5; //set physics parameter
+    fd.restitution = 0.2;
+
+    //create the body
+    this.body = world.CreateBody(bd);
+    //attach the shape to the body with the fixture
+    this.body.CreateFixture(fd);
+  }
+
+  display() {
+    //get the body's position
+    let pos = scaleToPixels(this.body.GetPosition());
+    //get its angle of rotation
+    let a = this.body.GetAngleRadians();
+        
+    //drawing object using rect()
+    rectMode(CENTER);
+    push();
+    translate(pos.x, pos.y);
+    rotate(a);
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(2);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/AzZglMfOG"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
