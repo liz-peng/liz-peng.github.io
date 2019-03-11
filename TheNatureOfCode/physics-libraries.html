@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TheNatureOfCode - Showcase</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- wrapper -->
+		<div id="wrapper">
+			<!-- main -->
+			<div id="main">
+				<div class="inner">
+					<!-- header -->
+					<header id="header">
+						The Nature Of Code &nbsp;<strong> Chp05 - Physics Libraries</strong>
+							<ul class="icons">
+								<li>
+									<a href="https://github.com/liz-peng/TheNatureOfCode-p5.js.git" target="_blank" class="icon fa-github"></a>
+								</li>
+							</ul>
+					</header>
+
+					<!-- section 4.1 -->
+					<section class="banner">
+						<div class="content">
+							<header>
+								<h3>Example 5.1<br>Box2D Exercise
+								</h3>
+							</header>
+							<p>
+								Click and drag to add box &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/SKEEkA1Yu" target="_blank" class="button">p5.js</a>
+							</p>
+							<!-- code -->
+							<pre><code>let boxes = []; //list to store all the box objects
+
+function setup() {
+  createCanvas(560, 390);
+  let text = createP("Click and drag to add box");
+  text.position(15, 5);
+}
+
+function draw() {
+  background(220);
+
+  //when the mouse is pressed, add a new box object
+  if (mouseIsPressed) {
+    let b = new Box(mouseX, mouseY);
+    boxes.push(b);
+  }
+  //display all the boc objects
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].display();
+  }
+}
+
+class Box {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.w = 16;
+    this.h = 16;
+  }
+
+  display() {
+    rectMode(CENTER);
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(2);
+    rect(this.x, this.y, this.w, this.h);
+  }
+}
+							</code></pre>
+						</div>
+						<span class="p5 object">
+							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/SKEEkA1Yu"></iframe>
+						</span>
+					</section>
+				</div>
+			</div>
+			
+			<!-- sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>The Nature Of Code</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Introduction</a></li>
+							<li><a href="vectors.html">Vectors</a></li>
+                            <li><a href="forces.html">Forces</a></li>
+                            <li><a href="oscillation.html">Oscillation</a></li>
+                            <li><a href="particle-systems.html">Particle Systems</a></li>
+                            <li><a href="physics-libraries.html">Physics Libraries</a></li>
+						</ul>
+					</nav>
+					
+					<!-- Footer -->
+					<footer id="footer">
+						<ul class="contact">
+							<li class="fa-envelope-o">speng2@wpi.edu&nbsp; (Liz Peng)</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
