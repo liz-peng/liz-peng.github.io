@@ -1325,6 +1325,245 @@ class Box {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/5HhNRpgxo"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 5.8 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 5.8<br>Mouse Joint
+                                </h3>
+                            </header>
+                            <p>
+                                Drag and throw the box &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/kb9d-n9xP" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//reference to box2d world
+let world;
+//list use to track fixed objects
+let boundaries = [];
+//a single box
+let box;
+//spring that will attach to the box from the mouse
+let spring;
+
+
+function setup() {
+  createCanvas(560, 390);
+  let text = createP("Drag and throw the box");
+  text.position(15, 5);
+
+  //initialize box2d physics and create the world
+  world = createWorld();
+
+  //make the box
+  box = new Box(width / 2, height / 2);
+
+  //make the spring (it doesn't really get initialized until the mouse is clicked)
+  spring = new Spring();
+
+  //add a bunch of fixed boundaries
+  boundaries.push(new Boundary(width / 2, height - 5, width, 10, 0));
+  boundaries.push(new Boundary(width / 2, 5, width, 10, 0));
+  boundaries.push(new Boundary(width - 5, height / 2, 10, height, 0));
+  boundaries.push(new Boundary(5, height / 2, 10, height, 0));
+
+}
+
+function draw() {
+  background(220);
+
+  //we must always step through time
+  let timeStep = 1.0 / 30;
+  //second and third arguments are velocity and position iterations
+  world.Step(timeStep, 10, 10);
+
+  //always alert the spring to the new mouse position
+  spring.update(mouseX, mouseY);
+
+  //draw the boundaries
+  for (let i = 0; i < boundaries.length; i++) {
+    boundaries[i].display();
+  }
+
+  //draw the box
+  box.display();
+  //draw the spring (it only appears when active)
+  spring.display();
+}
+
+//when the mouse is released, we done with the spring
+function mouseReleased() {
+  spring.destroy();
+}
+
+//when the mouse is pressed
+function mousePressed() {
+  //check to see if the mouse was clicked on the box
+  if (box.contains(mouseX, mouseY)) {
+    //if so, bind the mouse position to the box with a spring
+    spring.bind(mouseX, mouseY, box);
+  }
+}
+//class to describe the spring joint (displayed as a line)
+class Spring {
+  constructor(x, y) {
+    //at first it doesn't exist
+    this.mouseJoint = null;
+  }
+
+  //if it exists we set its target to the mouse location
+  update(x, y) {
+    if (this.mouseJoint !== null) {
+      //always convert to world coordinates!
+      let mouseWorld = scaleToWorld(x, y);
+      this.mouseJoint.SetTarget(mouseWorld);
+    }
+  }
+
+  display() {
+    if (this.mouseJoint !== null) {
+
+      let posA = this.mouseJoint.GetAnchorA();
+      let posB = this.mouseJoint.GetAnchorB();
+
+      //get the two anchor points
+      let v1 = scaleToPixels(posA.x, posA.y);
+      let v2 = scaleToPixels(posB.x, posB.y);
+      //draw a line
+      stroke(150);
+      strokeWeight(2);
+
+      line(v1.x, v1.y, v2.x, v2.y);
+    }
+  }
+
+  //key function
+  //attach the spring to an x,y location and box object's location
+  bind(x, y, box) {
+    //define the joint
+    let md = new box2d.b2MouseJointDef();
+    //body A is just a fake ground body for simplicity (there isn't anything at the mouse)
+    md.bodyA = world.CreateBody(new box2d.b2BodyDef()); //world.GetGroundBody();
+    //body B is the box's boxy
+    md.bodyB = box.body;
+    //get the mouse location in world coordinates
+    let mp = scaleToWorld(x, y);
+    //the target
+    //println(mp.x + " " + mp.y);
+    md.target = mp;
+    //println(md.target.x + " " + md.target.y);
+
+    //some stuff about how strong and bouncy the spring should be
+    md.maxForce = 1000.0 * box.body.m_mass;
+    md.frequencyHz = 5.0;
+    md.dampingRatio = 0.9;
+
+    //make the joint
+    this.mouseJoint = world.CreateJoint(md);
+  }
+
+  destroy() {
+    //we can get rid of the joint when the mouse is released
+    if (this.mouseJoint !== null) {
+      world.DestroyJoint(this.mouseJoint);
+      this.mouseJoint = null;
+    }
+  }
+}
+//a boundary is a simple rectangle with x,y,width,and height
+class Boundary {
+  constructor(x, y, w, h) {
+
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+
+    let fd = new box2d.b2FixtureDef();
+    fd.density = 1.0;
+    fd.friction = 0.5;
+    fd.restitution = 0.2;
+
+    let bd = new box2d.b2BodyDef();
+
+    bd.type = box2d.b2BodyType.b2_staticBody;
+    bd.position.x = scaleToWorld(this.x);
+    bd.position.y = scaleToWorld(this.y);
+    fd.shape = new box2d.b2PolygonShape();
+    fd.shape.SetAsBox(this.w / (scaleFactor * 2), this.h / (scaleFactor * 2));
+    this.body = world.CreateBody(bd).CreateFixture(fd);
+  }
+
+  //draw the boundary, if it were at an angle we'd have to do something fancier
+  display() {
+    fill(100);
+    stroke(50);
+    rectMode(CENTER);
+    rect(this.x, this.y, this.w, this.h);
+  }
+}
+class Box {
+  constructor(x, y) {
+    this.w = 24;
+    this.h = 24;
+
+    //define a body
+    let bd = new box2d.b2BodyDef();
+    bd.type = box2d.b2BodyType.b2_dynamicBody;
+    bd.position = scaleToWorld(x, y);
+
+    //define a fixture
+    let fd = new box2d.b2FixtureDef();
+    //fixture holds shape
+    fd.shape = new box2d.b2PolygonShape();
+    fd.shape.SetAsBox(scaleToWorld(this.w / 2), scaleToWorld(this.h / 2));
+
+    //some physics
+    fd.density = 1.0;
+    fd.friction = 0.5;
+    fd.restitution = 0.2;
+
+    //create the body
+    this.body = world.CreateBody(bd);
+    //attach the shape to the body with the fixture
+    this.body.CreateFixture(fd);
+
+    //some additional stuff
+    this.body.SetLinearVelocity(new box2d.b2Vec2(random(-5, 5), random(2, 5)));
+    this.body.SetAngularVelocity(random(-5, 5));
+  }
+
+  contains(x, y) {
+    let worldPoint = scaleToWorld(x, y);
+    let f = this.body.GetFixtureList();
+    let inside = f.TestPoint(worldPoint);
+    return inside;
+  }
+
+  //drawing the box
+  display() {
+    //get the body's position
+    let pos = scaleToPixels(this.body.GetPosition());
+    //get its angle of rotation
+    let a = this.body.GetAngleRadians();
+
+    rectMode(CENTER);
+    push();
+    translate(pos.x, pos.y);
+    rotate(a);
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(2);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/kb9d-n9xP"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
