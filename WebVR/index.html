@@ -1,7 +1,6 @@
 <html>
     <head>
         <title>Outer Space</title>
-        <meta name="description" content="Using Point component for rendering very many points."></meta>
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script> 
         <script src="https://unpkg.com/aframe-point-component/dist/aframe-point-component.min.js"></script>
         <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
@@ -10,9 +9,13 @@
     <body>
         <a-scene>
             <a-entity light="type: ambient; color: #fff"></a-entity>
-            <!-- <a-sphere position="0 0 0" perspective="true" radius="0.2" color="#69d" id="earth-too-big"></a-sphere> -->
+            <a-sphere position="0 0 0" perspective="true" radius="1.5" color="#a7afc7" id="planet1"></a-sphere>
+            <a-sphere position="15 20 0" perspective="true" radius="1.0" color="#c7a7af" id="planet2"></a-sphere>
+            <a-sphere position="-30 30 20" perspective="true" radius="1.0" color="#afc7a7" id="planet3"></a-sphere>
+            <a-sphere position="-10 5 -20" perspective="true" radius="1.0" color="#c7bfa7" id="planet4"></a-sphere>
+            <a-sphere position="35 5 10" perspective="true" radius="1.0" color="#c7afa7" id="planet5"></a-sphere>
             <a-point position="0 0 0" color="#fff" size="0.1" perspective="true"></a-point>
-            <a-sky color="#000"></a-sky>
+            <a-sky color="#060315"></a-sky>
             <a-entity class="camwrap" position="0 0 0" rotation="90 180 180">
                 <a-camera look-controls wasd-controls="fly:true acceleration:1" near="1" position="0 0 20" user-height="0" fov="60"></a-camera>
             </a-entity>
@@ -20,10 +23,10 @@
         <script>
             const mul = x => 0.07 * x
             const points = document.querySelector("a-point")
-            const cam = document.querySelector("a-camera")
+            const camera = document.querySelector("a-camera")
             setTimeout(function() {
-                cam.components["wasd-controls"].keys["KeyW"] = true;
-            }, 1000)
+                camera.components["wasd-controls"].keys["KeyW"] = true;
+            }, 5000)
             setTimeout(function() {
                 points.components.point.setPoints(
                     hygdata
