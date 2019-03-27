@@ -124,6 +124,116 @@ class Vehicle {
 							<iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/MqMx1301M"></iframe>
 						</span>
 					</section>
+
+                    <!-- section 6.2 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 6.2<br>Arrive Steering Behavior
+                                </h3>
+                            </header>
+                            <p>
+                                Move mouse to interact &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/cCokAOGKR" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//"vehicle" follows the mouse position
+//implements Craig Reynold's autonomous steering behaviors
+//one vehicle "arrive"
+let v;
+
+function setup() {
+  createCanvas(560,390);
+  let text = createP("Move mouse to interact");
+  text.position(15, 5);
+  v = new Vehicle(width/2, height/2);
+}
+
+function draw() {
+  background(220);
+
+  let mouse = createVector(mouseX, mouseY);
+
+  //draw an ellipse at the mouse position
+  fill(100);
+  stroke(50);
+  strokeWeight(2);
+  ellipse(mouse.x, mouse.y, 48, 48);
+
+  //call the appropriate steering behaviors for agents
+  v.arrive(mouse);
+  v.update();
+  v.display();
+}
+class Vehicle {
+  constructor(x, y) {
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(0, -2);
+    this.position = createVector(x, y);
+    this.r = 6;
+    this.maxspeed = 4;
+    this.maxforce = 0.1;
+  }
+
+  //method to update location
+  update() {
+    //update velocity
+    this.velocity.add(this.acceleration);
+    //limit speed
+    this.velocity.limit(this.maxspeed);
+    this.position.add(this.velocity);
+    //reset accelerationelertion to 0 each cycle
+    this.acceleration.mult(0);
+  }
+
+  applyForce(force) {
+    //add mass here if we want A = F / M
+    this.acceleration.add(force);
+  }
+
+  //method that calculates a steering force towards a target
+  //steer = desired - velocity
+  arrive(target) {
+    //vector pointing from the location to the target
+    var desired = p5.Vector.sub(target, this.position);
+    var d = desired.mag();
+    //scale with arbitrary damping within 100 pixels
+    if (d < 100) {
+      var m = map(d, 0, 100, 0, this.maxspeed);
+      desired.setMag(m);
+    } else {
+      desired.setMag(this.maxspeed);
+    }
+
+    //steering = desired - velocity
+    var steer = p5.Vector.sub(desired, this.velocity);
+    //limit to max steering force
+    steer.limit(this.maxforce);
+    this.applyForce(steer);
+  }
+
+  display() {
+    //draw a triangle rotated in the direction of velocity
+    var theta = this.velocity.heading() + PI / 2;
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(1);
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(theta);
+    beginShape();
+    vertex(0, -this.r * 2);
+    vertex(-this.r, this.r * 2);
+    vertex(this.r, this.r * 2);
+    endShape(CLOSE);
+    pop();
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/cCokAOGKR"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
