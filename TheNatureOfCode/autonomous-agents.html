@@ -1020,26 +1020,6 @@ function getNormalPoint(p, a, b) {
   let normalPoint = p5.Vector.add(a, ab);
   return normalPoint;
 }
-// class Path {
-//   constructor() {
-//     //a path has a radius, i.e how far is it ok for the boid to wander off
-//     this.radius = 20;
-//     //a Path is line between two points (p5.Vector objects)
-//     this.start = createVector(0, height / 3);
-//     this.end = createVector(width, 2 * height / 3);
-//   }
-
-//   //draw the path
-//   display() {
-//     strokeWeight(this.radius * 2);
-//     stroke(100, 50);
-//     line(this.start.x, this.start.y, this.end.x, this.end.y);
-
-//     strokeWeight(1);
-//     stroke(100);
-//     line(this.start.x, this.start.y, this.end.x, this.end.y);
-//   }
-// }
 
 class Path {
   constructor() {
@@ -1091,6 +1071,132 @@ class Path {
                         </div>
                         <span class="p5 object">
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/VEArvTw_t"></iframe>
+                        </span>
+                    </section>
+
+                    <!-- section 6.7 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 6.7<br>Group Behavior: Separation
+                                </h3>
+                            </header>
+                            <p>
+                                Drag to generate new vehicles &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/PK7XqxwDI" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//separation, via Reynolds: http://www.red3d.com/cwr/steer/
+
+//list of vehicles
+let vehicles = [];
+
+function setup() {
+  let text = createP("Drag to generate new vehicles");
+  text.position(15, 5);
+
+  createCanvas(560, 390);
+  //making random vehicles and storing them in an array
+  for (let i = 0; i < 25; i++) {
+    vehicles.push(new Vehicle(random(width), random(height)));
+  }
+}
+
+function draw() {
+  background(220);
+
+  for (let v of vehicles) {
+    v.separate(vehicles);
+    v.update();
+    v.borders();
+    v.display();
+  }
+}
+
+function mouseDragged() {
+  vehicles.push(new Vehicle(mouseX, mouseY));
+}
+class Vehicle {
+  constructor(x, y) {
+    //all the usual stuff
+    this.position = createVector(x, y);
+    this.r = 12;
+    this.maxspeed = 3; //max speed
+    this.maxforce = 0.2; //max steering force
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(0, 0);
+  }
+
+  applyForce(force) {
+    //add mass here if we want A = F / M
+    this.acceleration.add(force);
+  }
+
+  //separation
+  //method checks for nearby vehicles and steers away
+  separate(vehicles) {
+    let desiredseparation = this.r * 2;
+    let sum = createVector();
+    let count = 0;
+    //for every boid in the system, check if it's too close
+    for (let i = 0; i < vehicles.length; i++) {
+      let d = p5.Vector.dist(this.position, vehicles[i].position);
+      //if the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+      if ((d > 0) && (d < desiredseparation)) {
+        //calculate vector pointing away from neighbor
+        let diff = p5.Vector.sub(this.position, vehicles[i].position);
+        diff.normalize();
+        diff.div(d); //weight by distance
+        sum.add(diff);
+        count++; //keep track of how many
+      }
+    }
+    //average: divide by how many
+    if (count > 0) {
+      sum.div(count);
+      //our desired vector is the average scaled to max speed
+      sum.normalize();
+      sum.mult(this.maxspeed);
+      //implement Reynolds: steering = desired - velocity
+      let steer = p5.Vector.sub(sum, this.velocity);
+      steer.limit(this.maxforce);
+      this.applyForce(steer);
+    }
+  }
+
+  //method to update location
+  update() {
+    //update velocity
+    this.velocity.add(this.acceleration);
+    //limit speed
+    this.velocity.limit(this.maxspeed);
+    this.position.add(this.velocity);
+    //reset accelertion to 0 each cycle
+    this.acceleration.mult(0);
+  }
+
+  display() {
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(2);
+    push();
+    translate(this.position.x, this.position.y);
+    ellipse(0, 0, this.r, this.r);
+    pop();
+  }
+
+  //wraparound
+  borders() {
+    if (this.position.x < -this.r) this.position.x = width + this.r;
+    if (this.position.y < -this.r) this.position.y = height + this.r;
+    if (this.position.x > width + this.r) this.position.x = -this.r;
+    if (this.position.y > height + this.r) this.position.y = -this.r;
+  }
+}
+
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/PK7XqxwDI"></iframe>
                         </span>
                     </section>
 				</div>
