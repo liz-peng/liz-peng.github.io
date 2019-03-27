@@ -555,6 +555,230 @@ class FlowField {
                             <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/drw53LzeA"></iframe>
                         </span>
                     </section>
+
+                    <!-- section 6.5 -->
+                    <section class="banner">
+                        <div class="content">
+                            <header>
+                                <h3>Example 6.5<br>Simple Path Following
+                                </h3>
+                            </header>
+                            <p>
+                                Hit space bar to toggle debugging lines &nbsp; <a href="https://editor.p5js.org/liz-peng/sketches/80jDegltH" target="_blank" class="button">p5.js</a>
+                            </p>
+                            <!-- code -->
+                            <pre><code>//path is a straight line in this example
+//Via Reynolds: http://www.red3d.com/cwr/steer/PathFollow.html
+
+//ues this variable to decide whether to draw all the stuff
+let debug = true;
+//a path object (series of connected points)
+let path;
+//two vehicles car1 and car2
+let car1;
+let car2;
+
+function setup() {
+  let text = createP("Hit space bar to toggle debugging lines");
+  text.position(15, 5);
+  
+  createCanvas(560,390);
+  path = new Path();
+
+  //each vehicle has different maxspeed and maxforce for demo purposes
+  car1 = new Vehicle(0, height / 2, 2, 0.05);
+  car2 = new Vehicle(0, height / 2, 3, 0.10);
+}
+
+function draw() {
+  background(220);
+  //display the path
+  path.display();
+  //the boids follow the path
+  car1.follow(path);
+  car2.follow(path);
+  //call generic run method (update, borders, display, etc.)
+  car1.run();
+  car2.run();
+
+  //check if it gets to the end of the path since it's not a loop
+  car1.borders(path);
+  car2.borders(path);
+}
+
+function keyPressed() {
+  if (key == ' ') {
+    debug = !debug;
+  }
+}
+class Vehicle {
+  constructor(x, y, ms, mf) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(2, 0);
+    this.r = 6;
+    this.maxspeed = ms || 100;
+    this.maxforce = mf || 0.1;
+  }
+
+  run() {
+    this.update();
+    this.display();
+  }
+
+  //this function implements Craig Reynolds' path following algorithm
+  // http://www.red3d.com/cwr/steer/PathFollow.html
+  follow(p) {
+    //predict position 30 (arbitrary choice) frames ahead
+    let predict = this.velocity.copy();
+    predict.normalize();
+    predict.mult(30);
+    let predictLoc = p5.Vector.add(this.position, predict);
+
+    //look at the line segment
+    let a = p.start;
+    let b = p.end;
+
+    //get the normal point to that line
+    let normalPoint = getNormalPoint(predictLoc, a, b);
+
+    //find target point a little further ahead of normal
+    let dir = p5.Vector.sub(b, a);
+    dir.normalize();
+    //this could be based on velocity instead of just an arbitrary 10 pixels
+    dir.mult(10);
+    let target = p5.Vector.add(normalPoint, dir);
+
+    //find how far away are we from the path
+    let distance = p5.Vector.dist(predictLoc, normalPoint);
+    //if the distance is greater than the path's radius do we bother to steer
+    if (distance > p.radius) {
+      this.seek(target);
+    }
+
+    //draw the debugging stuff
+    if (debug) {
+      fill(100);
+      stroke(50);
+      line(this.position.x, this.position.y, predictLoc.x, predictLoc.y);
+      ellipse(predictLoc.x, predictLoc.y, 6, 6);
+
+      //draw normal location
+      fill(100);
+      stroke(50);
+      line(predictLoc.x, predictLoc.y, normalPoint.x, normalPoint.y);
+      ellipse(normalPoint.x, normalPoint.y, 6, 6);
+      stroke(50);
+      if (distance > p.radius) fill(255, 0, 0);
+      noStroke();
+      ellipse(target.x + dir.x, target.y + dir.y, 8, 8);
+    }
+  }
+
+
+  applyForce(force) {
+    //add mass here if we want A = F / M
+    this.acceleration.add(force);
+  }
+
+  //method that calculates and applies a steering force towards a target
+  //steer = desired - velocity
+  seek(target) {
+    //a vector pointing from the position to the target
+    let desired = p5.Vector.sub(target, this.position);
+
+    //if the magnitude of desired = 0, skip out of here
+    //we could optimize this to check if x and y are 0 to avoid mag() square root
+    if (desired.mag() === 0) return;
+
+    //normalize desired and scale to maximum speed
+    desired.normalize();
+    desired.mult(this.maxspeed);
+    //steering = desired - Velocity
+    let steer = p5.Vector.sub(desired, this.velocity);
+    //limit to maximum steering force
+    steer.limit(this.maxforce);
+    this.applyForce(steer);
+  }
+
+  //method to update position
+  update() {
+    //update velocity
+    this.velocity.add(this.acceleration);
+    //limit speed
+    this.velocity.limit(this.maxspeed);
+    this.position.add(this.velocity);
+    //reset accelerationelertion to 0 each cycle
+    this.acceleration.mult(0);
+  }
+
+  //wraparound
+  borders(p) {
+    if (this.position.x > p.end.x + this.r) {
+      this.position.x = p.start.x - this.r;
+      this.position.y = p.start.y + (this.position.y - p.end.y);
+    }
+  }
+
+  display() {
+    //draw a triangle rotated in the direction of velocity
+    let theta = this.velocity.heading() + PI / 2;
+    fill(63,63,147);
+    stroke(50);
+    strokeWeight(1);
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(theta);
+    beginShape();
+    vertex(0, -this.r * 2);
+    vertex(-this.r, this.r * 2);
+    vertex(this.r, this.r * 2);
+    endShape(CLOSE);
+    pop();
+  }
+
+}
+
+//a function to get the normal point from a point (p) to a line segment (a-b)
+//this function could be optimized to make fewer new Vector objects
+function getNormalPoint(p, a, b) {
+  //vector from a to p
+  let ap = p5.Vector.sub(p, a);
+  //vector from a to b
+  let ab = p5.Vector.sub(b, a);
+  //normalize the line
+  ab.normalize();
+  //project vector "diff" onto line by using the dot product
+  ab.mult(ap.dot(ab));
+  let normalPoint = p5.Vector.add(a, ab);
+  return normalPoint;
+}
+class Path {
+  constructor() {
+    //a path has a radius, i.e how far is it ok for the boid to wander off
+    this.radius = 20;
+    //a Path is line between two points (p5.Vector objects)
+    this.start = createVector(0, height / 3);
+    this.end = createVector(width, 2 * height / 3);
+  }
+
+  //draw the path
+  display() {
+    strokeWeight(this.radius * 2);
+    stroke(100, 50);
+    line(this.start.x, this.start.y, this.end.x, this.end.y);
+
+    strokeWeight(1);
+    stroke(100);
+    line(this.start.x, this.start.y, this.end.x, this.end.y);
+  }
+}
+                            </code></pre>
+                        </div>
+                        <span class="p5 object">
+                            <iframe style="width: 100%; height: 100%; overflow: hidden; padding-top: 36px;" scrolling="no" src="https://editor.p5js.org/liz-peng/embed/80jDegltH"></iframe>
+                        </span>
+                    </section>
 				</div>
 			</div>
 			
