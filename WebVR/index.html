@@ -34,16 +34,14 @@
             </a-entity>
         </a-scene>
         <script>
-            const mul = x => 0.07 * x
-            const points = document.querySelector("a-point")
-            const camera = document.querySelector("a-camera")
+            const multi = x => 0.07 * x, pt = document.querySelector("a-point"), cam = document.querySelector("a-camera");
             setTimeout(function() {
-                camera.components["wasd-controls"].keys["KeyW"] = true;
-            }, 8000)
+                cam.components["wasd-controls"].keys["KeyW"] = true;
+            }, 8000);
             setTimeout(function() {
-                points.components.point.setPoints(
-                    hygdata.map(star => [mul(star.x), mul(star.y), mul(star.z)]))
-            }, 1000)
+                pt.components.point.setPoints(
+                    hygdata.map(star => [multi(star.x), multi(star.y), multi(star.z)]))
+            }, 1000);
         </script>
     </body>
 </html>
