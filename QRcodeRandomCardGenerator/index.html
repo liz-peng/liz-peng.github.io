@@ -7,12 +7,8 @@
 <body>
 	<div id="qrcode"></div>
 	<script type="text/javascript">
-	function randomCards(cards){
-		return cards[Math.floor(Math.random()*cards.length)];    
-	}
-	let cards = ["Ghost stops 5 sec", "Ghost stops 10 sec", "Ghost stops 20 sec"];
 	let qrcode = new QRCode(document.getElementById("qrcode"), {
-		text: randomCards(cards),
+		text: "You have escaped! Click the link for a new round: https://bit.ly/346BB2c",
 		width: 300,
 		height: 300,
 		colorDark : "#000000",
