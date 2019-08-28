@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="qrcode.min.js"></script>
+</head>
+<body>
+	<div id="qrcode"></div>
+	<script type="text/javascript">
+	function randomCards(cards){
+		return cards[Math.floor(Math.random()*cards.length)];    
+	}
+	let cards = ["Ghost stops 5 sec", "Ghost stops 10 sec", "Ghost stops 20 sec"];
+	let qrcode = new QRCode(document.getElementById("qrcode"), {
+		text: randomCards(cards),
+		width: 300,
+		height: 300,
+		colorDark : "#000000",
+		colorLight : "#ffffff",
+		correctLevel : QRCode.CorrectLevel.H
+	});
+	</script>
+</body>
+</html>
