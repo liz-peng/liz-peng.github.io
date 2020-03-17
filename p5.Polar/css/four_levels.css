@@ -1,20 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;800&display=swap');
+
 body {
   margin: 0;
-  background: #112D4F;
-  font-family: "Courier New", Courier, monospace;
+  background: #232F60;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+}
+
+p {
+  line-height: 1.4;
 }
 
 hr {
   border: 0.5px solid #9fabba; 
 }
 
-h4 {
-  color: #e78c45;
+h3, h4 {
+  color: #e1b16a;
 }
 
 a {
   color: #ccc;
   text-decoration: none;
+}
+
+b {
+  font-weight: 800;
 }
 
 button {
@@ -36,17 +47,22 @@ button:hover {
 }
 
 hint {
-  background: #ccc;
-  color: #4c4c4c;
+  background: rgba(145, 151, 175, 0.7);
+  color: #e9eaef;
   padding: 0 0.5em;
+  font-weight: 600;
 }
 
 func {
-  color: #d54e53;
+  color: #ce5a57;
 }
 
 key {
-  color: #a16a94;
+  color: #78a5a3;
+}
+
+check {
+  font-size: 30px;
 }
 
 .logo {
@@ -105,8 +121,8 @@ key {
   grid-area: codeArea;
   display: grid;
   height: 100%;
-  grid-template-rows: 5% 55% 25% 15%;
-  grid-template-columns: 40%;
+  grid-template-rows: 5% 55% 23% 17%;
+  grid-template-columns: 35%;
   grid-template-areas: "nav polar"
                        "intro polar"
                        "codemirror polar" 
@@ -118,7 +134,7 @@ key {
   display: flex;
   color: #ccc;
   border-bottom: 1px solid #9fabba;
-  background: #112d4f;
+  background: #232F60;
   height: 100%;
   align-items: center;
 }
@@ -162,6 +178,14 @@ key {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  z-index: 3;
+}
+
+#measurement {
+  grid-area: polar;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   z-index: 2;
 }
 
@@ -192,12 +216,12 @@ key {
 .CodeMirror {
   height: auto !important;
   font-family: "Courier New", Courier, monospace !important;
-  background-color: #112D4F !important;
+  background-color: #232F60 !important;
 }
 
 .CodeMirror-gutters {
   border-right: 0px !important;
-  background-color: #112D4F !important;
+  background-color: #232F60 !important;
 }
 
 .CodeMirror-linenumber {
