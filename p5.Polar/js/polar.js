@@ -35,22 +35,22 @@ p5.prototype.polarTriangles = function(_num, _radius, _distance, callback) {
 }
 
 // Ellipse
-p5.prototype.polarEllipse = function(_angle, _radius, _distance) {
+p5.prototype.polarEllipse = function(_angle, _radiusW, _radiusH, _distance) {
   this.resetMatrix();
   this.translate(polar.center.x, polar.center.y);
   const _radians = this.radians(_angle);
   this.translate(this.sin(_radians)*_distance, this.cos(_radians)*_distance);
-  this.ellipse(0, 0, _radius*2);
+  this.ellipse(0, 0, _radiusW*2, _radiusH*2);
 }
 
-p5.prototype.polarEllipses = function(_num, _radius, _distance, callback) {
+p5.prototype.polarEllipses = function(_num, _radiusW, _radiusH, _distance, callback) {
   const _angle = 360/_num;
   for(let i=1; i<=_num; i++) {
     if(callback) {
       const _result = callback(i, _angle, _radius, _distance);
-      this.polarEllipse(_result[0]*_result[1], _result[2], _result[3]);
+      this.polarEllipse(_result[0]*_result[1], _result[2], _result[3], _result[4]);
     }
-    else this.polarEllipse(i*_angle, _radius, _distance);
+    else this.polarEllipse(i*_angle, _radiusW, _radiusH, _distance);
   }
 }
 
