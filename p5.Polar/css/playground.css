@@ -123,10 +123,6 @@ funcMulti {
   padding: 0px 15px;
   overflow: auto;
   position: relative;
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
 }
 
 #codemirror {
@@ -135,11 +131,6 @@ funcMulti {
   border-top: 4px solid #9fabba;
   border-bottom: 4px solid #9fabba;
   padding-top: 15px;
-  padding-right: 15px;
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
 }
 
 #console {
